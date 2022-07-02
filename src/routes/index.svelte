@@ -1,17 +1,13 @@
 <script lang="ts">
   import Header from "../components/Header.svelte";
   import Summary from "../components/Summary.svelte";
+  import { loadAndConvertFile } from "../lib/fileConverter";
+  import type { EntrySet } from "../types";
 
-  let data;
+  let data: EntrySet;
 
-  function setFile(event: CustomEvent) {
-    const file = event.detail;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      console.log(event.target.result);
-      data = JSON.parse(event.target.result as string);
-    };
-    reader.readAsText(file);
+  async function setFile(event: CustomEvent) {
+    data = await loadAndConvertFile(event.detail);
   }
 </script>
 
