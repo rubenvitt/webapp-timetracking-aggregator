@@ -24,7 +24,11 @@
         duration: moment.duration(0)
       };
     }
-    acc[activityTitle].duration += acc[activityTitle].duration.add(curr.duration);
+    console.log(acc, curr)
+    acc[activityTitle] = {
+      title: activityTitle,
+      duration: acc[activityTitle].duration.add(curr.duration)
+    };
     return acc;
   }, {})) as { title: string, duration: number }[]).map(value => {
     return {
@@ -51,16 +55,18 @@
       </div>
       <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class="text-sm font-medium text-gray-500">Hours per Project</dt>
-        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          <CopyButton value={groupedByActivity.map(value => {
-              return `${value.title}: ${value.duration}`;
-            }).join("\n")
-            } />
-          <ul>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex">
+          <ul class="flex-1">
             {#each groupedByActivity as {title, duration}}
               <li>{title}: {duration}</li>
             {/each}
           </ul>
+          <div>
+            <CopyButton value={groupedByActivity.map(value => {
+              return `${value.title}: ${value.duration}`;
+            }).join("\n")
+            } />
+          </div>
         </dd>
       </div>
     </dl>

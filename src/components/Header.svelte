@@ -29,7 +29,7 @@
   <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8 lg:flex lg:justify-between">
     <div class="max-w-xl">
       <h2 class="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">Time Tracking
-        Summary</h2>
+        Aggregator</h2>
       <p class="mt-5 text-xl text-gray-500">Upload a timing export as json for the last month.</p>
     </div>
     <div class="mt-10 w-full max-w-xs">

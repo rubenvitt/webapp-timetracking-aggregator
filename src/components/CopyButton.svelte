@@ -11,6 +11,6 @@
 
 <style lang="css">
     button {
-        @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
+        @apply bg-white text-black border-2 border-black p-2 rounded-lg hover:bg-black hover:text-white hover:border-white;
     }
 </style>
