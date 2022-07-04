@@ -1,12 +1,11 @@
 <script lang="ts">
   import type { EntrySet } from "../types";
   import * as moment from "moment";
-  import { utc } from "moment";
   import CopyButton from "./CopyButton.svelte";
 
   export let data: EntrySet;
 
-  const workingHours = utc(data.map(entry => {
+  const workingHours = moment.utc(data.map(entry => {
     console.log(data)
     return Number(entry.duration);
   }).reduce((acc, curr) => {
