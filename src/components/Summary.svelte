@@ -2,11 +2,11 @@
   import type { EntrySet } from "../types";
   import * as moment from "moment";
   import CopyButton from "./CopyButton.svelte";
+  import { extractTicketNr } from "../lib/entryset-helper";
 
   export let data: EntrySet;
 
   const workingHours = moment.utc(data.map(entry => {
-    console.log(data)
     return Number(entry.duration);
   }).reduce((acc, curr) => {
     return acc + curr;
@@ -16,14 +16,13 @@
   const endDate = moment.max(data.map(entry => entry.day)).local().format("DD.MM.YYYY");
 
   const groupedByActivity = (Object.values(data.reduce((acc, curr) => {
-    const activityTitle = curr.activityTitle.split(":")[0];
+    const activityTitle = extractTicketNr(curr.activityTitle);
     if (!acc[activityTitle]) {
       acc[activityTitle] = {
         title: activityTitle,
         duration: moment.duration(0)
       };
     }
-    console.log(acc, curr)
     acc[activityTitle] = {
       title: activityTitle,
       duration: acc[activityTitle].duration.add(curr.duration)
