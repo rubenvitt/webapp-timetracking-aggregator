@@ -58,6 +58,7 @@
     return items.reduce((acc, curr) => {
       console.log("curr: ", curr);
       const ticketNr = curr.ticketNr;
+      const duration = moment.utc(curr.duration.asMilliseconds()).format("HH:mm");
       const notes = curr.items
         .map(item => item.notes)
         .filter((value, index, self) => self.indexOf(value) === index)
@@ -65,7 +66,7 @@
           return (acc1 ? acc1 + ", " : "") + curr1;
         }, undefined);
 
-      return (acc ? acc + "; " : "") + `${ticketNr}: ${notes}`;
+      return (acc ? acc + "; " : "") + `${ticketNr} (${duration}): ${notes}`;
     }, undefined);
   }
 </script>
