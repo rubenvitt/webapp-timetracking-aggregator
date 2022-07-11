@@ -4,10 +4,13 @@
   import CopyButton from "./CopyButton.svelte";
   import { extractTicketNr } from "../lib/entryset-helper";
 
-  export let data: EntrySet;
+  export let data: {day: moment.Moment, items: EntrySet[]}[];
 
+  console.log(data);
   const workingHours = moment.utc(data.map(entry => {
-    return Number(entry.duration);
+    return entry.items.map(e => {
+      return e.duration.asMilliseconds();
+    }).reduce((a, b) => a + b, 0);
   }).reduce((acc, curr) => {
     return acc + curr;
   })).format("HH:mm");
@@ -15,8 +18,30 @@
   const startDate = moment.min(data.map(entry => entry.day)).local().format("DD.MM.YYYY");
   const endDate = moment.max(data.map(entry => entry.day)).local().format("DD.MM.YYYY");
 
-  const groupedByActivity = (Object.values(data.reduce((acc, curr) => {
-    const activityTitle = extractTicketNr(curr.activityTitle);
+  const groupedByActivity = (Object.values(
+    data.map(entry => entry.items).reduce((acc, curr) => {
+      console.log("acc: ", acc);
+      curr.forEach(item => {
+        if (acc[item.ticketNr]) {
+          acc[item.ticketNr].push(item);
+        } else {
+          acc[item.ticketNr] = [item];
+        }
+      });
+      return acc;
+    }, {})
+  )).map(items => {
+    console.log("items: ", items);
+    return {
+      title: items[0].ticketNr,
+      duration: moment.duration(items.map(item => item.duration.asMilliseconds()).reduce((a, b) => a + b, 0)).asHours().toPrecision(3),
+    };
+  }).sort((a, b) => {
+    return a.title.localeCompare(b.title);
+  });
+
+  const groupedByActivityold = (Object.values(data.reduce((acc, curr) => {
+    const activityTitle = curr.ticketNr;
     if (!acc[activityTitle]) {
       acc[activityTitle] = {
         title: activityTitle,
