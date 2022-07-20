@@ -16,9 +16,4 @@ steps:
         from_secret: docker-password
       tags:
         - latest
-        - main
-    when:
-      event:
-        - push
-      branch:
-        - main
+        - ${DRONE_COMMIT_BRANCH}
