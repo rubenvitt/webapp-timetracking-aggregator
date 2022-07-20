@@ -14,5 +14,8 @@ steps:
         from_secret: docker-user
       password:
         from_secret: docker-password
-      when:
-        branch: main
+      tags:
+        - latest
+        - main
+    when:
+      branch: main
