@@ -5,6 +5,7 @@ name: build-pipline
 
 steps:
   - image: plugins/docker
+    name: docker-publish
     settings:
       registry: git.rubeen.dev
       repo: git.rubeen.dev/web-apps/time-tracking-aggregator
