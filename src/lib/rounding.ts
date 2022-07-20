@@ -1,10 +1,18 @@
-import moment from "moment/moment";
+import { TimingExport, TimingExportItem } from './fileConverter';
+import { Duration } from '@js-joda/core';
 
-export function round(duration: moment.Duration, roundTo: number): moment.Duration {
-  duration.subtract(duration.seconds(), "seconds");
-  duration.subtract(duration.milliseconds(), "milliseconds");
-
-  const start = moment.utc(duration.as("milliseconds"));
-  const remainder = roundTo - (start.minute() % roundTo);
-  return duration.add(remainder, "minute");
+export function round(data: TimingExport | undefined, roundTo: number): TimingExport | undefined {
+	// round all durations to nearest roundTo minutes and update hours
+	if (!data) {
+		return undefined;
+	}
+	return new TimingExport(
+		data.items.map((item) => {
+			const roundedDuration =
+				item.duration.toMinutes() % roundTo === 0
+					? item.duration
+					: Duration.ofMinutes(roundTo * Math.round(item.duration.toMinutes() / roundTo));
+			return new TimingExportItem(roundedDuration, item.ticket, item.notes, item.day);
+		})
+	);
 }

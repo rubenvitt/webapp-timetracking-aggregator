@@ -41,4 +41,4 @@
   </div>
 </li>
 
-<style type="text/css"></style>
+<style lang="css"></style>
