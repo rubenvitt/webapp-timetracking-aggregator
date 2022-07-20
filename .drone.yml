@@ -18,5 +18,7 @@ steps:
         - latest
         - main
     when:
-      event: push
-      branch: main
+      event:
+        - push
+      branch:
+        - main
