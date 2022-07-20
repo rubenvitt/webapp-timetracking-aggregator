@@ -15,7 +15,6 @@
     acc[ticket].push(cur);
     return acc;
   }, {})).map(element => {
-    console.log(element);
     return {
       ticket: element[0],
       duration: element[1].reduce((acc, cur) => {
@@ -23,14 +22,9 @@
       }, Duration.ZERO)
     };
   }) : undefined;
-
-  $: {
-    console.log(groupedByTicket);
-  }
-
 </script>
 
-<div class="bg-white shadow overflow-hidden sm:rounded-lg max-w-4xl mx-12">
+<div class="bg-white shadow overflow-hidden sm:rounded-lg mr-12 flex-1">
   <div class="px-4 py-5 sm:px-6">
     <h3 class="text-lg leading-6 font-medium text-gray-900">Time Tracking Summary</h3>
     <p class="mt-1 max-w-2xl text-sm text-gray-500">Summary of your working hours</p>
