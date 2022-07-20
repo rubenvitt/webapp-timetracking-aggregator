@@ -6,7 +6,7 @@ COPY . .
 RUN npm install -g pnpm
 RUN pnpm install --frozen-lockfile --ignore-scripts
 RUN pnpm run build
-RUN npm prune --production # Remove dev dependencies
+RUN pnpm prune --production # Remove dev dependencies
 
 EXPOSE 5000
 ENV HOST=0.0.0.0
