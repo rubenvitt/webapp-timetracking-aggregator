@@ -2,18 +2,31 @@
   import CopyButton from "./CopyButton.svelte";
   import { TimingExport } from "../lib/fileConverter";
   import { formatDuration } from "../lib/formatter.js";
+  import { Duration } from "@js-joda/core";
 
   export let data: TimingExport;
 
-  const groupedByTicket = [];
-  $: groupedByTickets = data ? data.items.reduce((acc, cur) => {
+  let groupedByTicket: { ticket: string, duration: Duration }[];
+  $: groupedByTicket = data ? Object.entries(data.items.reduce((acc, cur) => {
     const ticket = cur.ticket;
     if (!acc[ticket]) {
       acc[ticket] = [];
     }
     acc[ticket].push(cur);
     return acc;
-  }, {}) : undefined;
+  }, {})).map(element => {
+    console.log(element);
+    return {
+      ticket: element[0],
+      duration: element[1].reduce((acc, cur) => {
+        return acc.plus(cur.duration);
+      }, Duration.ZERO)
+    };
+  }) : undefined;
+
+  $: {
+    console.log(groupedByTicket);
+  }
 
 </script>
 
@@ -36,13 +49,13 @@
         <dt class="text-sm font-medium text-gray-500">Hours per Project</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex">
           <ul class="flex-1">
-            {#each groupedByTicket as { title, duration }}
-              <li>{title}: {duration}</li>
+            {#each groupedByTicket as { ticket, duration }}
+              <li>{ticket}: {formatDuration(duration)}</li>
             {/each}
           </ul>
           <div>
-            <CopyButton value={groupedByTicket.map(value => {
-              return `${value.title}: ${value.duration}`;
+            <CopyButton value={groupedByTicket.map(({ticket, duration}) => {
+              return `${ticket}: ${formatDuration(duration)}`;
             }).join("\n")
             } />
           </div>

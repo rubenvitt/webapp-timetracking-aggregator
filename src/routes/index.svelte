@@ -4,6 +4,7 @@
   import RoundButton from "../components/RoundButton.svelte";
   import { round } from "../lib/rounding";
   import Summary from "../components/Summary.svelte";
+  import EntryList from "../components/EntryList.svelte";
 
   let loadedData: TimingExport;
   let rounding = 15;
@@ -27,13 +28,9 @@
 
 {#if data}
   <Summary data={data}></Summary>
+  <EntryList data={data}></EntryList>
 
   {#each data.items as entry}
     {JSON.stringify(entry)}
   {/each}
 {/if}
-
-<!--{#if data}-->
-<!--  <Summary data={[]}></Summary>-->
-<!--  <EntryList data={[]}></EntryList>-->
-<!--{/if}-->
