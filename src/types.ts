@@ -1,9 +1,8 @@
-import type { Moment } from "moment";
 
 export type Entry = {
   activityTitle: string;
-  day: Moment;
-  duration: Moment;
+  day: string;
+  duration: string;
   notes: string;
   project: string;
 }

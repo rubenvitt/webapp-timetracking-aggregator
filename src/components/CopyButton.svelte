@@ -1,13 +1,11 @@
 <script lang="ts">
+  import copy from "../lib/copy.js";
+
   export let value: string;
-
-  function copy() {
-    navigator.clipboard.writeText(value);
-  }
-
+  export let title = "Copy value";
 </script>
 
-<button on:click={copy}>Copy value</button>
+<button on:click={() => copy(value)}>{title}</button>
 
 <style lang="css">
     button {
