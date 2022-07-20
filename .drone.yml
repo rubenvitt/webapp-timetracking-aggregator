@@ -1,0 +1,17 @@
+---
+kind: pipeline
+type: docker
+name: build-pipline
+
+steps:
+  - image: plugins/docker
+    settings:
+      registry: git.rubeen.dev
+      repo: git.rubeen.dev/web-apps/time-tracking-aggregator
+      auto_tag: "true"
+      username:
+        from_secret: docker-user
+      password:
+        from_secret: docker-password
+      when:
+        branch: main
