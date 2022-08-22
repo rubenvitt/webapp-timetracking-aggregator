@@ -25,7 +25,7 @@
 
     return Object.keys(grouped).sort((a, b) => a.localeCompare(b)).map(key => {
       let item = grouped[key];
-      return `${item.ticket} (${formatDuration(item.duration)}): ${item.notes.join(", ")}`;
+      return `${item.ticket} (${formatDuration(item.duration)}): ${item.notes.filter((value, index, self) => self.indexOf(value) === index).join(", ")}`;
     }).join("; ");
   }
 
