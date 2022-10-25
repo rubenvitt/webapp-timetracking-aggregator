@@ -9,8 +9,8 @@ build-and-push:
     - docker:dind
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA || true
+    - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG || true
   script:
-    - docker build --cache-from $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
+    - docker build --cache-from $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
     - if [ "$CI_COMMIT_REF_SLUG" = "main" ]; then docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG $CI_REGISTRY_IMAGE:latest; docker push $CI_REGISTRY_IMAGE:latest; fi
