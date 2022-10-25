@@ -4,6 +4,7 @@ stages:
 build-and-push:
   image: docker:latest
   stage: build-and-push
+  interruptible: true
   services:
     - docker:dind
   before_script:
