@@ -1,13 +1,15 @@
-FROM node:18-alpine
+FROM docker.rubeen.dev/docker/node-18-with-pnpm:latest
 
 WORKDIR /app
+ENV PORT=3000
+ENV HOST=0.0.0.0
+EXPOSE 3000
+
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 COPY . .
-RUN npm install --frozen-lockfile --ignore-scripts
-RUN npm run build
-RUN npm prune --production # Remove dev dependencies
+RUN pnpm run build
+RUN pnpm prune --prod --config.ignore-scripts=true
 
-EXPOSE 5000
-ENV HOST=0.0.0.0
-
-CMD [ "npm", "run", "preview" ]
+CMD [ "node", "./build/index.js" ]
