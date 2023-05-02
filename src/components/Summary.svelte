@@ -49,7 +49,7 @@
           </ul>
           <div>
             <CopyButton value={groupedByTicket.map(({ticket, duration}) => {
-              return `${ticket}: ${formatDuration(duration)}`;
+              return `${ticket}:\t${formatDuration(duration)}`;
             }).join("\n")
             } />
           </div>
