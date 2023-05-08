@@ -3,7 +3,7 @@
   import RoundButtonOption from "./RoundButtonOption.svelte";
   import { createEventDispatcher } from "svelte";
 
-  export let selectedRoundOption = 15;
+  export let selectedRoundOption = 30;
   let rounding = true;
 
   const dispatch = createEventDispatcher();

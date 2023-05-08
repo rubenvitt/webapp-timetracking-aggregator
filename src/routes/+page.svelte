@@ -7,7 +7,7 @@
   import Summary from "../components/Summary.svelte";
 
   let loadedData: TimingExport;
-  let rounding = 15;
+  let rounding = 30;
 
 
   async function setFile(event: CustomEvent) {
